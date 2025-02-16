@@ -1,6 +1,4 @@
 {
-    "ignorePaths": [],
-    "words": [
-       "wonka"
-    ]
+    "ignorePaths": [".env"],
+    "words": ["firestore", "wonka"]
 }

@@ -4,8 +4,12 @@ import cookieParser from 'cookie-parser'
 
 import { EnvConfigs } from './EnvConfigs'
 import { useCors } from '@src/middlewares/useCors'
+import { getRoutes } from '@src/routes'
+// import { initializeFirebaseApp } from '@src/configs/firebase.config'
 
 const app = express()
+
+// initializeFirebaseApp()
 
 app.set('trust proxy', true)
 
@@ -19,9 +23,10 @@ app.use(helmet())
 
 app.disable('etag').disable('x-powered-by')
 
+/* ts server */
 const PORT = EnvConfigs.PORT
 
-//auth server
+getRoutes(app)
 
 app.listen(PORT)
 

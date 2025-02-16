@@ -4,7 +4,7 @@ export function useCors(_request: Request, res: Response, next: NextFunction) {
     try {
         res.header('Access-Control-Allow-Credentials', 'true')
 
-        res.header('Access-Control-Allow-Methods', 'GET, OPTIONS' /* ', POST, OPTIONS, PUT, DELETE' */)
+        res.header('Access-Control-Allow-Methods', 'GET, OPTIONS POST, PUT, DELETE')
 
         res.header('Access-Control-Allow-Headers', 'esp-data')
 
