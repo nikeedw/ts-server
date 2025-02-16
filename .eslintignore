@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.vscode
+
+REST_API
+public
+
+# configs
+# webpack.config.js
+# config-overrides.js
+# deployment

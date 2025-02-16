@@ -1,0 +1,32 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "[javascript]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": false
+    },
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1500,
+    "eslint.alwaysShowStatus": true,
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "todo-tree.general.tags": ["FIXME", "TODO", "BUG", "INFO"],
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "typescript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.enabled": true,
+    // "svn.ignoreMissingSvnWarning": true,
+    "cSpell.words": ["wonka"],
+    "typescript.enablePromptUseWorkspaceTsdk": true
+}

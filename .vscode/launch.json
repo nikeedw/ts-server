@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to process",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**"
+            ]
+        },
+        {
+            "name": "tsx",
+            "type": "node",
+            "request": "launch",
+
+            "program": "${workspaceFolder}/src/server.ts",
+
+            /*
+             * Path to tsx binary
+             * Assuming locally installed
+             */
+            "runtimeExecutable": "tsx",
+            "runtimeArgs": ["--watch"],
+
+            /*
+             * Open terminal when debugging starts (Optional)
+             * Useful to see console.logs
+             */
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+
+            // Files to exclude from debugger (e.g. call stack)
+            "skipFiles": [
+                // Node.js internal core modules
+                "<node_internals>/**",
+
+                // Ignore all dependencies (optional)
+                "${workspaceFolder}/node_modules/**"
+            ]
+        }
+    ]
+}

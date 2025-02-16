@@ -1,0 +1,8 @@
+dist/
+node_modules/
+.env
+yarn-error*
+
+.idea/
+.dccache
+.history
