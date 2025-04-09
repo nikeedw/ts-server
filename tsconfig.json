@@ -36,53 +36,8 @@
         // paths
         "paths": {
             "@EnvConfigs": ["EnvConfigs"],
-            "@src/*": ["src/*"],
+            "@src/*": ["src/*"]
         }
     },
     "include": ["src/**/*"]
 }
-
-// {
-//     "compilerOptions": {
-//         "target": "ESNext",
-//         "module": "ES2022",
-
-//         "noImplicitReturns": true,
-//         "noImplicitThis": true,
-//         "noImplicitAny": true,
-//         "noUnusedParameters": true,
-//         "noUncheckedIndexedAccess": true,
-//         "strictFunctionTypes": true,
-//         "skipDefaultLibCheck": true,
-//         "strictBindCallApply": true,
-//         "strictNullChecks": true,
-//         "strict": true,
-//         "preserveConstEnums": true,
-//         "noEmit": true,
-//         "allowJs": false,
-
-//         "skipLibCheck": true,
-//         "isolatedModules": true,
-//         "esModuleInterop": true,
-//         "moduleResolution": "node",
-//         "resolveJsonModule": true,
-//         "experimentalDecorators": true,
-//         "allowSyntheticDefaultImports": true,
-//         "forceConsistentCasingInFileNames": true,
-//         "useUnknownInCatchVariables": false,
-//         "noFallthroughCasesInSwitch": true,
-//         "sourceMap": true,
-//         "outDir": "./dist",
-//         "rootDir": "./src",
-//         "baseUrl": ".",
-//         "paths": {
-//             "@EnvConfigs": ["EnvConfigs"],
-//             "@src/*": ["src/*"],
-//             "*": ["node_modules/*"]
-//         },
-//         "plugins": []
-//     },
-//     "include": ["src/**/*"]
-// }
-
-// has context menu
