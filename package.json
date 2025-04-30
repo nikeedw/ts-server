@@ -10,21 +10,26 @@
         "build": "npx tsc && npx esbuild src/server.ts  --bundle --outfile=dist/server.mjs --format=esm --platform=node",
         "eslint": "eslint \"./**/*.{js,ts}\"",
         "eslint:fix": "eslint --fix \"./**/*.{js,ts}\"",
-        "prettier": "prettier --write \"./**/*.{js,ts}\""
+        "prettier": "prettier --write \"./**/*.{js,ts}\"",
+        "genserver": "gql.tada generate schema 'http://localhost:8080/v1/graphql' -o ./generated/tada/schema/server.graphql && gql-tada generate output"
     },
     "dependencies": {
         "@babel/core": "^7.23.0",
         "@babel/node": "^7.22.19",
+        "@urql/core": "^5.1.1",
+        "bcrypt": "^5.1.1",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.7",
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
+        "gql.tada": "^1.8.10",
         "helmet": "^8.0.0",
         "jsonwebtoken": "^9.0.2",
         "multer": "1.4.5-lts.1",
         "prettier": "^3.0.3"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
         "@types/bcryptjs": "^2.4.4",
         "@types/cookie-parser": "^1.4.8",
         "@types/express": "^4.17.18",

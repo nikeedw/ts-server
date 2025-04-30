@@ -1,0 +1,1722 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""ordering argument of a cursor"""
+enum cursor_ordering {
+  """ascending ordering of the cursor"""
+  ASC
+
+  """descending ordering of the cursor"""
+  DESC
+}
+
+"""this table is storing esp's data in json format"""
+type esp_data {
+  data(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  id: Int!
+  mac_addr: String!
+}
+
+"""
+aggregated selection of "esp_data"
+"""
+type esp_data_aggregate {
+  aggregate: esp_data_aggregate_fields
+  nodes: [esp_data!]!
+}
+
+"""
+aggregate fields of "esp_data"
+"""
+type esp_data_aggregate_fields {
+  avg: esp_data_avg_fields
+  count(columns: [esp_data_select_column!], distinct: Boolean): Int!
+  max: esp_data_max_fields
+  min: esp_data_min_fields
+  stddev: esp_data_stddev_fields
+  stddev_pop: esp_data_stddev_pop_fields
+  stddev_samp: esp_data_stddev_samp_fields
+  sum: esp_data_sum_fields
+  var_pop: esp_data_var_pop_fields
+  var_samp: esp_data_var_samp_fields
+  variance: esp_data_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input esp_data_append_input {
+  data: jsonb
+}
+
+"""aggregate avg on columns"""
+type esp_data_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "esp_data". All fields are combined with a logical 'AND'.
+"""
+input esp_data_bool_exp {
+  _and: [esp_data_bool_exp!]
+  _not: esp_data_bool_exp
+  _or: [esp_data_bool_exp!]
+  data: jsonb_comparison_exp
+  id: Int_comparison_exp
+  mac_addr: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "esp_data"
+"""
+enum esp_data_constraint {
+  """
+  unique or primary key constraint on columns "mac_addr"
+  """
+  esp_data_mac_addr_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  esp_data_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input esp_data_delete_at_path_input {
+  data: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input esp_data_delete_elem_input {
+  data: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input esp_data_delete_key_input {
+  data: String
+}
+
+"""
+input type for incrementing numeric columns in table "esp_data"
+"""
+input esp_data_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "esp_data"
+"""
+input esp_data_insert_input {
+  data: jsonb
+  id: Int
+  mac_addr: String
+}
+
+"""aggregate max on columns"""
+type esp_data_max_fields {
+  id: Int
+  mac_addr: String
+}
+
+"""aggregate min on columns"""
+type esp_data_min_fields {
+  id: Int
+  mac_addr: String
+}
+
+"""
+response of any mutation on the table "esp_data"
+"""
+type esp_data_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [esp_data!]!
+}
+
+"""
+on_conflict condition type for table "esp_data"
+"""
+input esp_data_on_conflict {
+  constraint: esp_data_constraint!
+  update_columns: [esp_data_update_column!]! = []
+  where: esp_data_bool_exp
+}
+
+"""Ordering options when selecting data from "esp_data"."""
+input esp_data_order_by {
+  data: order_by
+  id: order_by
+  mac_addr: order_by
+}
+
+"""primary key columns input for table: esp_data"""
+input esp_data_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input esp_data_prepend_input {
+  data: jsonb
+}
+
+"""
+select columns of table "esp_data"
+"""
+enum esp_data_select_column {
+  """column name"""
+  data
+
+  """column name"""
+  id
+
+  """column name"""
+  mac_addr
+}
+
+"""
+input type for updating data in table "esp_data"
+"""
+input esp_data_set_input {
+  data: jsonb
+  id: Int
+  mac_addr: String
+}
+
+"""aggregate stddev on columns"""
+type esp_data_stddev_fields {
+  id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type esp_data_stddev_pop_fields {
+  id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type esp_data_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "esp_data"
+"""
+input esp_data_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: esp_data_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input esp_data_stream_cursor_value_input {
+  data: jsonb
+  id: Int
+  mac_addr: String
+}
+
+"""aggregate sum on columns"""
+type esp_data_sum_fields {
+  id: Int
+}
+
+"""
+update columns of table "esp_data"
+"""
+enum esp_data_update_column {
+  """column name"""
+  data
+
+  """column name"""
+  id
+
+  """column name"""
+  mac_addr
+}
+
+input esp_data_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: esp_data_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: esp_data_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: esp_data_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: esp_data_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: esp_data_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: esp_data_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: esp_data_set_input
+
+  """filter the rows which have to be updated"""
+  where: esp_data_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type esp_data_var_pop_fields {
+  id: Float
+}
+
+"""aggregate var_samp on columns"""
+type esp_data_var_samp_fields {
+  id: Float
+}
+
+"""aggregate variance on columns"""
+type esp_data_variance_fields {
+  id: Float
+}
+
+"""this is the main esp information table"""
+type espmac {
+  """An array relationship"""
+  espmac_to_espusermac(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """An aggregate relationship"""
+  espmac_to_espusermac_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): espusermac_aggregate!
+  mac_addr: String!
+  password: String!
+}
+
+"""
+aggregated selection of "espmac"
+"""
+type espmac_aggregate {
+  aggregate: espmac_aggregate_fields
+  nodes: [espmac!]!
+}
+
+"""
+aggregate fields of "espmac"
+"""
+type espmac_aggregate_fields {
+  count(columns: [espmac_select_column!], distinct: Boolean): Int!
+  max: espmac_max_fields
+  min: espmac_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "espmac". All fields are combined with a logical 'AND'.
+"""
+input espmac_bool_exp {
+  _and: [espmac_bool_exp!]
+  _not: espmac_bool_exp
+  _or: [espmac_bool_exp!]
+  espmac_to_espusermac: espusermac_bool_exp
+  espmac_to_espusermac_aggregate: espusermac_aggregate_bool_exp
+  mac_addr: String_comparison_exp
+  password: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "espmac"
+"""
+enum espmac_constraint {
+  """
+  unique or primary key constraint on columns "mac_addr"
+  """
+  espmac_pkey
+}
+
+"""
+input type for inserting data into table "espmac"
+"""
+input espmac_insert_input {
+  espmac_to_espusermac: espusermac_arr_rel_insert_input
+  mac_addr: String
+  password: String
+}
+
+"""aggregate max on columns"""
+type espmac_max_fields {
+  mac_addr: String
+  password: String
+}
+
+"""aggregate min on columns"""
+type espmac_min_fields {
+  mac_addr: String
+  password: String
+}
+
+"""
+response of any mutation on the table "espmac"
+"""
+type espmac_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [espmac!]!
+}
+
+"""
+on_conflict condition type for table "espmac"
+"""
+input espmac_on_conflict {
+  constraint: espmac_constraint!
+  update_columns: [espmac_update_column!]! = []
+  where: espmac_bool_exp
+}
+
+"""Ordering options when selecting data from "espmac"."""
+input espmac_order_by {
+  espmac_to_espusermac_aggregate: espusermac_aggregate_order_by
+  mac_addr: order_by
+  password: order_by
+}
+
+"""primary key columns input for table: espmac"""
+input espmac_pk_columns_input {
+  mac_addr: String!
+}
+
+"""
+select columns of table "espmac"
+"""
+enum espmac_select_column {
+  """column name"""
+  mac_addr
+
+  """column name"""
+  password
+}
+
+"""
+input type for updating data in table "espmac"
+"""
+input espmac_set_input {
+  mac_addr: String
+  password: String
+}
+
+"""
+Streaming cursor of the table "espmac"
+"""
+input espmac_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: espmac_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input espmac_stream_cursor_value_input {
+  mac_addr: String
+  password: String
+}
+
+"""
+update columns of table "espmac"
+"""
+enum espmac_update_column {
+  """column name"""
+  mac_addr
+
+  """column name"""
+  password
+}
+
+input espmac_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: espmac_set_input
+
+  """filter the rows which have to be updated"""
+  where: espmac_bool_exp!
+}
+
+"""this is the pivot table for connecting the user and esp"""
+type espusermac {
+  mac_addr: String!
+  username: String!
+}
+
+"""
+aggregated selection of "espusermac"
+"""
+type espusermac_aggregate {
+  aggregate: espusermac_aggregate_fields
+  nodes: [espusermac!]!
+}
+
+input espusermac_aggregate_bool_exp {
+  count: espusermac_aggregate_bool_exp_count
+}
+
+input espusermac_aggregate_bool_exp_count {
+  arguments: [espusermac_select_column!]
+  distinct: Boolean
+  filter: espusermac_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "espusermac"
+"""
+type espusermac_aggregate_fields {
+  count(columns: [espusermac_select_column!], distinct: Boolean): Int!
+  max: espusermac_max_fields
+  min: espusermac_min_fields
+}
+
+"""
+order by aggregate values of table "espusermac"
+"""
+input espusermac_aggregate_order_by {
+  count: order_by
+  max: espusermac_max_order_by
+  min: espusermac_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "espusermac"
+"""
+input espusermac_arr_rel_insert_input {
+  data: [espusermac_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: espusermac_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "espusermac". All fields are combined with a logical 'AND'.
+"""
+input espusermac_bool_exp {
+  _and: [espusermac_bool_exp!]
+  _not: espusermac_bool_exp
+  _or: [espusermac_bool_exp!]
+  mac_addr: String_comparison_exp
+  username: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "espusermac"
+"""
+enum espusermac_constraint {
+  """
+  unique or primary key constraint on columns "mac_addr"
+  """
+  espusermac_mac_addr_key
+
+  """
+  unique or primary key constraint on columns "mac_addr", "username"
+  """
+  espusermac_pkey
+
+  """
+  unique or primary key constraint on columns "username"
+  """
+  espusermac_username_key
+}
+
+"""
+input type for inserting data into table "espusermac"
+"""
+input espusermac_insert_input {
+  mac_addr: String
+  username: String
+}
+
+"""aggregate max on columns"""
+type espusermac_max_fields {
+  mac_addr: String
+  username: String
+}
+
+"""
+order by max() on columns of table "espusermac"
+"""
+input espusermac_max_order_by {
+  mac_addr: order_by
+  username: order_by
+}
+
+"""aggregate min on columns"""
+type espusermac_min_fields {
+  mac_addr: String
+  username: String
+}
+
+"""
+order by min() on columns of table "espusermac"
+"""
+input espusermac_min_order_by {
+  mac_addr: order_by
+  username: order_by
+}
+
+"""
+response of any mutation on the table "espusermac"
+"""
+type espusermac_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [espusermac!]!
+}
+
+"""
+on_conflict condition type for table "espusermac"
+"""
+input espusermac_on_conflict {
+  constraint: espusermac_constraint!
+  update_columns: [espusermac_update_column!]! = []
+  where: espusermac_bool_exp
+}
+
+"""Ordering options when selecting data from "espusermac"."""
+input espusermac_order_by {
+  mac_addr: order_by
+  username: order_by
+}
+
+"""primary key columns input for table: espusermac"""
+input espusermac_pk_columns_input {
+  mac_addr: String!
+  username: String!
+}
+
+"""
+select columns of table "espusermac"
+"""
+enum espusermac_select_column {
+  """column name"""
+  mac_addr
+
+  """column name"""
+  username
+}
+
+"""
+input type for updating data in table "espusermac"
+"""
+input espusermac_set_input {
+  mac_addr: String
+  username: String
+}
+
+"""
+Streaming cursor of the table "espusermac"
+"""
+input espusermac_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: espusermac_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input espusermac_stream_cursor_value_input {
+  mac_addr: String
+  username: String
+}
+
+"""
+update columns of table "espusermac"
+"""
+enum espusermac_update_column {
+  """column name"""
+  mac_addr
+
+  """column name"""
+  username
+}
+
+input espusermac_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: espusermac_set_input
+
+  """filter the rows which have to be updated"""
+  where: espusermac_bool_exp!
+}
+
+scalar jsonb
+
+input jsonb_cast_exp {
+  String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  _cast: jsonb_cast_exp
+
+  """is the column contained in the given json value"""
+  _contained_in: jsonb
+
+  """does the column contain the given json value at the top level"""
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """does the string exist as a top-level key in the column"""
+  _has_key: String
+
+  """do all of these strings exist as top-level keys in the column"""
+  _has_keys_all: [String!]
+
+  """do any of these strings exist as top-level keys in the column"""
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "esp_data"
+  """
+  delete_esp_data(
+    """filter the rows which have to be deleted"""
+    where: esp_data_bool_exp!
+  ): esp_data_mutation_response
+
+  """
+  delete single row from the table: "esp_data"
+  """
+  delete_esp_data_by_pk(id: Int!): esp_data
+
+  """
+  delete data from the table: "espmac"
+  """
+  delete_espmac(
+    """filter the rows which have to be deleted"""
+    where: espmac_bool_exp!
+  ): espmac_mutation_response
+
+  """
+  delete single row from the table: "espmac"
+  """
+  delete_espmac_by_pk(mac_addr: String!): espmac
+
+  """
+  delete data from the table: "espusermac"
+  """
+  delete_espusermac(
+    """filter the rows which have to be deleted"""
+    where: espusermac_bool_exp!
+  ): espusermac_mutation_response
+
+  """
+  delete single row from the table: "espusermac"
+  """
+  delete_espusermac_by_pk(mac_addr: String!, username: String!): espusermac
+
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  delete single row from the table: "users"
+  """
+  delete_users_by_pk(username: String!): users
+
+  """
+  insert data into the table: "esp_data"
+  """
+  insert_esp_data(
+    """the rows to be inserted"""
+    objects: [esp_data_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: esp_data_on_conflict
+  ): esp_data_mutation_response
+
+  """
+  insert a single row into the table: "esp_data"
+  """
+  insert_esp_data_one(
+    """the row to be inserted"""
+    object: esp_data_insert_input!
+
+    """upsert condition"""
+    on_conflict: esp_data_on_conflict
+  ): esp_data
+
+  """
+  insert data into the table: "espmac"
+  """
+  insert_espmac(
+    """the rows to be inserted"""
+    objects: [espmac_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: espmac_on_conflict
+  ): espmac_mutation_response
+
+  """
+  insert a single row into the table: "espmac"
+  """
+  insert_espmac_one(
+    """the row to be inserted"""
+    object: espmac_insert_input!
+
+    """upsert condition"""
+    on_conflict: espmac_on_conflict
+  ): espmac
+
+  """
+  insert data into the table: "espusermac"
+  """
+  insert_espusermac(
+    """the rows to be inserted"""
+    objects: [espusermac_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: espusermac_on_conflict
+  ): espusermac_mutation_response
+
+  """
+  insert a single row into the table: "espusermac"
+  """
+  insert_espusermac_one(
+    """the row to be inserted"""
+    object: espusermac_insert_input!
+
+    """upsert condition"""
+    on_conflict: espusermac_on_conflict
+  ): espusermac
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  insert a single row into the table: "users"
+  """
+  insert_users_one(
+    """the row to be inserted"""
+    object: users_insert_input!
+
+    """upsert condition"""
+    on_conflict: users_on_conflict
+  ): users
+
+  """
+  update data of the table: "esp_data"
+  """
+  update_esp_data(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: esp_data_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: esp_data_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: esp_data_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: esp_data_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: esp_data_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: esp_data_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: esp_data_set_input
+
+    """filter the rows which have to be updated"""
+    where: esp_data_bool_exp!
+  ): esp_data_mutation_response
+
+  """
+  update single row of the table: "esp_data"
+  """
+  update_esp_data_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: esp_data_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: esp_data_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: esp_data_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: esp_data_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: esp_data_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: esp_data_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: esp_data_set_input
+    pk_columns: esp_data_pk_columns_input!
+  ): esp_data
+
+  """
+  update multiples rows of table: "esp_data"
+  """
+  update_esp_data_many(
+    """updates to execute, in order"""
+    updates: [esp_data_updates!]!
+  ): [esp_data_mutation_response]
+
+  """
+  update data of the table: "espmac"
+  """
+  update_espmac(
+    """sets the columns of the filtered rows to the given values"""
+    _set: espmac_set_input
+
+    """filter the rows which have to be updated"""
+    where: espmac_bool_exp!
+  ): espmac_mutation_response
+
+  """
+  update single row of the table: "espmac"
+  """
+  update_espmac_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: espmac_set_input
+    pk_columns: espmac_pk_columns_input!
+  ): espmac
+
+  """
+  update multiples rows of table: "espmac"
+  """
+  update_espmac_many(
+    """updates to execute, in order"""
+    updates: [espmac_updates!]!
+  ): [espmac_mutation_response]
+
+  """
+  update data of the table: "espusermac"
+  """
+  update_espusermac(
+    """sets the columns of the filtered rows to the given values"""
+    _set: espusermac_set_input
+
+    """filter the rows which have to be updated"""
+    where: espusermac_bool_exp!
+  ): espusermac_mutation_response
+
+  """
+  update single row of the table: "espusermac"
+  """
+  update_espusermac_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: espusermac_set_input
+    pk_columns: espusermac_pk_columns_input!
+  ): espusermac
+
+  """
+  update multiples rows of table: "espusermac"
+  """
+  update_espusermac_many(
+    """updates to execute, in order"""
+    updates: [espusermac_updates!]!
+  ): [espusermac_mutation_response]
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  update single row of the table: "users"
+  """
+  update_users_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+
+  """
+  update multiples rows of table: "users"
+  """
+  update_users_many(
+    """updates to execute, in order"""
+    updates: [users_updates!]!
+  ): [users_mutation_response]
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "esp_data"
+  """
+  esp_data(
+    """distinct select on columns"""
+    distinct_on: [esp_data_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [esp_data_order_by!]
+
+    """filter the rows returned"""
+    where: esp_data_bool_exp
+  ): [esp_data!]!
+
+  """
+  fetch aggregated fields from the table: "esp_data"
+  """
+  esp_data_aggregate(
+    """distinct select on columns"""
+    distinct_on: [esp_data_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [esp_data_order_by!]
+
+    """filter the rows returned"""
+    where: esp_data_bool_exp
+  ): esp_data_aggregate!
+
+  """fetch data from the table: "esp_data" using primary key columns"""
+  esp_data_by_pk(id: Int!): esp_data
+
+  """
+  fetch data from the table: "espmac"
+  """
+  espmac(
+    """distinct select on columns"""
+    distinct_on: [espmac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espmac_order_by!]
+
+    """filter the rows returned"""
+    where: espmac_bool_exp
+  ): [espmac!]!
+
+  """
+  fetch aggregated fields from the table: "espmac"
+  """
+  espmac_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espmac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espmac_order_by!]
+
+    """filter the rows returned"""
+    where: espmac_bool_exp
+  ): espmac_aggregate!
+
+  """fetch data from the table: "espmac" using primary key columns"""
+  espmac_by_pk(mac_addr: String!): espmac
+
+  """
+  fetch data from the table: "espusermac"
+  """
+  espusermac(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """
+  fetch aggregated fields from the table: "espusermac"
+  """
+  espusermac_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): espusermac_aggregate!
+
+  """fetch data from the table: "espusermac" using primary key columns"""
+  espusermac_by_pk(mac_addr: String!, username: String!): espusermac
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(username: String!): users
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "esp_data"
+  """
+  esp_data(
+    """distinct select on columns"""
+    distinct_on: [esp_data_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [esp_data_order_by!]
+
+    """filter the rows returned"""
+    where: esp_data_bool_exp
+  ): [esp_data!]!
+
+  """
+  fetch aggregated fields from the table: "esp_data"
+  """
+  esp_data_aggregate(
+    """distinct select on columns"""
+    distinct_on: [esp_data_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [esp_data_order_by!]
+
+    """filter the rows returned"""
+    where: esp_data_bool_exp
+  ): esp_data_aggregate!
+
+  """fetch data from the table: "esp_data" using primary key columns"""
+  esp_data_by_pk(id: Int!): esp_data
+
+  """
+  fetch data from the table in a streaming manner: "esp_data"
+  """
+  esp_data_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [esp_data_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: esp_data_bool_exp
+  ): [esp_data!]!
+
+  """
+  fetch data from the table: "espmac"
+  """
+  espmac(
+    """distinct select on columns"""
+    distinct_on: [espmac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espmac_order_by!]
+
+    """filter the rows returned"""
+    where: espmac_bool_exp
+  ): [espmac!]!
+
+  """
+  fetch aggregated fields from the table: "espmac"
+  """
+  espmac_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espmac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espmac_order_by!]
+
+    """filter the rows returned"""
+    where: espmac_bool_exp
+  ): espmac_aggregate!
+
+  """fetch data from the table: "espmac" using primary key columns"""
+  espmac_by_pk(mac_addr: String!): espmac
+
+  """
+  fetch data from the table in a streaming manner: "espmac"
+  """
+  espmac_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [espmac_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: espmac_bool_exp
+  ): [espmac!]!
+
+  """
+  fetch data from the table: "espusermac"
+  """
+  espusermac(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """
+  fetch aggregated fields from the table: "espusermac"
+  """
+  espusermac_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): espusermac_aggregate!
+
+  """fetch data from the table: "espusermac" using primary key columns"""
+  espusermac_by_pk(mac_addr: String!, username: String!): espusermac
+
+  """
+  fetch data from the table in a streaming manner: "espusermac"
+  """
+  espusermac_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [espusermac_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(username: String!): users
+
+  """
+  fetch data from the table in a streaming manner: "users"
+  """
+  users_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [users_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+}
+
+"""this table contains user information"""
+type users {
+  password: String!
+  username: String!
+
+  """An array relationship"""
+  users_to_espusermac(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """An aggregate relationship"""
+  users_to_espusermac_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): espusermac_aggregate!
+}
+
+"""
+aggregated selection of "users"
+"""
+type users_aggregate {
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
+}
+
+"""
+aggregate fields of "users"
+"""
+type users_aggregate_fields {
+  count(columns: [users_select_column!], distinct: Boolean): Int!
+  max: users_max_fields
+  min: users_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp!]
+  _not: users_bool_exp
+  _or: [users_bool_exp!]
+  password: String_comparison_exp
+  username: String_comparison_exp
+  users_to_espusermac: espusermac_bool_exp
+  users_to_espusermac_aggregate: espusermac_aggregate_bool_exp
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  """
+  unique or primary key constraint on columns "username"
+  """
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  password: String
+  username: String
+  users_to_espusermac: espusermac_arr_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type users_max_fields {
+  password: String
+  username: String
+}
+
+"""aggregate min on columns"""
+type users_min_fields {
+  password: String
+  username: String
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [users!]!
+}
+
+"""
+on_conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]! = []
+  where: users_bool_exp
+}
+
+"""Ordering options when selecting data from "users"."""
+input users_order_by {
+  password: order_by
+  username: order_by
+  users_to_espusermac_aggregate: espusermac_aggregate_order_by
+}
+
+"""primary key columns input for table: users"""
+input users_pk_columns_input {
+  username: String!
+}
+
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  """column name"""
+  password
+
+  """column name"""
+  username
+}
+
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  password: String
+  username: String
+}
+
+"""
+Streaming cursor of the table "users"
+"""
+input users_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: users_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input users_stream_cursor_value_input {
+  password: String
+  username: String
+}
+
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  """column name"""
+  password
+
+  """column name"""
+  username
+}
+
+input users_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: users_set_input
+
+  """filter the rows which have to be updated"""
+  where: users_bool_exp!
+}

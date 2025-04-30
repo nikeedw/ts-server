@@ -31,13 +31,26 @@
 
         "baseUrl": "./",
         "outDir": "./dist",
-        "rootDir": "./src",
-
+        "rootDir": "./",
+        "plugins": [
+            {
+                "name": "gql.tada/ts-plugin",
+                "shouldCheckForColocatedFragments": false,
+                "trackFieldUsage": false,
+                "schemas": [
+                    {
+                        "name": "server",
+                        "schema": "./generated/tada/schema/server.graphql",
+                        "tadaOutputLocation": "./generated/tada/server-graphql-env.d.ts"
+                    }
+                ]
+            }
+        ],
         // paths
         "paths": {
             "@EnvConfigs": ["EnvConfigs"],
             "@src/*": ["src/*"]
         }
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "generated"]
 }

@@ -8,6 +8,9 @@ export const EnvConfigs = {
     FIREBASE_WEB_API_KEY: process.env.FIREBASE_WEB_API_KEY ?? 'unknown',
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID ?? 'unknown',
     FIREBASE_DB_URL: process.env.FIREBASE_DB_URL ?? 'unknown',
+
+    JWT_SECRET: process.env.JWT_SECRET || '',
+    TOKEN_SALT: Number(process.env.TOKEN_SALT) || 1
 }
 
 if (!EnvConfigs.PORT) {
