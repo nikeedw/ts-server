@@ -10,6 +10,6 @@ export function getRoutes(app: Express) {
      * shared getter
      * // TODO need to split specific endpoint for this context
      */
-    app.get('/login', upload.none(),  login)
-    app.get('/register', upload.none(),  register)
+    app.post('/login', upload.none(), login)
+    app.post('/register', upload.none(), register)
 }

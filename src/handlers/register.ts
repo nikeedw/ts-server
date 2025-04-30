@@ -7,14 +7,10 @@ import { EnvConfigs } from '@src/EnvConfigs'
 
 export async function register(req: Request, res: Response) {
     try {
-        const { username, password, confirmPassword } = req.body
+        const { username, password } = req.body
 
-        if (!username || !password || !confirmPassword) {
+        if (!username || !password) {
             return res.status(400).send('Missing fields')
-        }
-
-        if (password !== confirmPassword) {
-            return res.status(400).send('Passwords do not match')
         }
 
         const { query, mutation } = await getTadaServerClient()
