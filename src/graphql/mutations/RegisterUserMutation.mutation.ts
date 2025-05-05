@@ -1,4 +1,4 @@
-import { graphql } from 'generated/tada/server-graphql'
+import { graphql } from '@tada-server'
 
 export const RegisterUserMutation = graphql(`
     mutation RegisterUser($username: String!, $password: String!) {

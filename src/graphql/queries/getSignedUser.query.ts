@@ -1,4 +1,4 @@
-import { getTadaServerClient, graphql, ResultOf, VariablesOf } from 'generated/tada/server-graphql'
+import { getTadaServerClient, graphql, VariablesOf } from '@tada-server'
 
 const SignedUserQuery = graphql(`
     query getSignedUser($username: String!) {
@@ -9,19 +9,12 @@ const SignedUserQuery = graphql(`
     }
 `)
 
-export async function getSignedUser(
-    username: VariablesOf<typeof SignedUserQuery>['username'],
-) {
-    try {
-        const { query } = await getTadaServerClient()
+export async function getSignedUser(username: VariablesOf<typeof SignedUserQuery>['username']) {
+    const { query } = await getTadaServerClient()
 
-        const { data, error } = await query(SignedUserQuery, { username })
+    const { data, error } = await query(SignedUserQuery, { username })
 
-        if (error) throw error
+    if (error) throw error
 
-        return data?.users_by_pk
-    } catch (e) {
-        console.error(e)
-        return
-    }
+    return data?.users_by_pk
 }

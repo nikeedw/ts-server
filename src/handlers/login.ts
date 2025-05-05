@@ -2,10 +2,12 @@ import { EnvConfigs } from '@src/EnvConfigs'
 import { getSignedUser } from '@src/graphql/queries/getSignedUser.query'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 export async function login(req: Request, res: Response) {
     try {
+        console.log('testare')
+
         const { username, password } = req.body
 
         if (!username || !password) {

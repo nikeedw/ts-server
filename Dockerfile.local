@@ -1,0 +1,22 @@
+# TODO rename to Dockerfile
+
+FROM node:23-slim
+
+WORKDIR /app
+
+# Install pnpm
+RUN npm i -g pnpm
+# RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Root files
+COPY package.json tsconfig.json pnpm-lock.yaml ./
+
+RUN pnpm install
+
+COPY . .
+
+RUN pnpm build
+
+EXPOSE 8100
+
+CMD ["node", "dist/server.mjs"]

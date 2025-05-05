@@ -1,8 +1,8 @@
 import { CheckUserExistsQuery } from '@src/graphql/queries/checkExistingUser.query'
 import { RegisterUserMutation } from '@src/graphql/mutations/RegisterUserMutation.mutation'
 import { Request, Response } from 'express'
-import { getTadaServerClient } from 'generated/tada/server-graphql'
-import bcrypt from 'bcrypt'
+import { getTadaServerClient } from '@tada-server'
+import bcrypt from 'bcryptjs'
 import { EnvConfigs } from '@src/EnvConfigs'
 
 export async function register(req: Request, res: Response) {

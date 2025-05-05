@@ -1,7 +1,7 @@
 {
     "parserOptions": {
         "ecmaVersion": 6,
-        "sourceType": "module"
+        "sourceType": "module",
     },
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint", "prettier", "import", "unused-imports"],
@@ -12,19 +12,20 @@
         "prettier",
         "plugin:prettier/recommended",
         "plugin:import/errors",
-        "plugin:import/warnings"
+        "plugin:import/warnings",
     ],
 
     "rules": {
         "prettier/prettier": "warn",
+        //    "space-in-parens": ["error", "always"],
         "@typescript-eslint/no-unused-vars": [
             "error",
-            { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+            { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" },
         ],
         "unused-imports/no-unused-imports-ts": "error",
         "unused-imports/no-unused-vars-ts": [
             "warn",
-            { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+            { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" },
         ],
         "no-debugger": "off",
         "prefer-const": "error",
@@ -43,40 +44,44 @@
             {
                 "extendDefaults": true,
                 "types": {
-                    "{}": false
-                }
-            }
+                    "{}": false,
+                },
+            },
         ],
         "no-prototype-builtins": "off",
         "import/order": [
             "warn",
             {
                 "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-                "newlines-between": "always"
-            }
-        ]
+                "newlines-between": "always",
+            },
+        ],
     },
     "settings": {
         "import/resolver": {
             "eslint-import-resolver-custom-alias": {
-                "alias": {}, // TODO: specify aliases
-                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+                "alias": {
+                    "@tada-server": "./src/generated/tada/server-graphql",
+                    "@tada-client": "./src/generated/tada/initTadaClient",
+                    "@hooks": "src/middlewares/hooks",
+                },
+                "extensions": [".js", ".jsx", ".ts", ".tsx"],
             },
             "typescript": {
-                "alwaysTryTypes": true
+                "alwaysTryTypes": true,
             },
             "node": {
-                "extensions": [".js", ".ts"]
-            }
-        }
+                "extensions": [".js", ".ts"],
+            },
+        },
     },
     "globals": {
         "document": true,
         "foo": true,
-        "window": true
+        "window": true,
     },
     "env": {
         "browser": true,
-        "node": true
-    }
+        "node": true,
+    },
 }

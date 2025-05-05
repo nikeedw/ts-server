@@ -1,8 +1,8 @@
 import { initGraphQLTada } from 'gql.tada'
 import type { introspection } from './server-graphql-env'
-import { initTadaClient } from './initTadaClient'
+import { initTadaClient } from '@tada-client'
 
-export type IUUID = `${string}-${string}-${string}-${string}-${string}` //шаблонная затирала(Интерполированная строка)
+export type IUUID = `${string}-${string}-${string}-${string}-${string}`
 
 export const graphql = initGraphQLTada<{
     introspection: introspection
