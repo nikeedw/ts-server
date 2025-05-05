@@ -1,4 +1,5 @@
 import * as esbuild from 'esbuild'
+//src/server.ts  --bundle --outfile=dist/server.mjs --format=esm --platform=node
 
 await esbuild.build({
     entryPoints: ['src/server.ts'],
@@ -9,6 +10,9 @@ await esbuild.build({
     platform: 'node',
     alias: {
         '@src/*': 'src/*',
+        '@tada-server': 'src/generated/tada/server-graphql',
+        '@tada-client': 'src/generated/tada/initTadaClient',
+        '@hooks': 'src/middlewares/hooks',
     },
 
     banner: {

@@ -5,8 +5,17 @@ build
 
 REST_API
 public
-
-# configs
-# webpack.config.js
-# config-overrides.js
-# deployment
+k8s_configs
+k8s_configs
+configs
+webpack.config.js
+config-overrides.js
+apollo.config.js
+serviceWorker.ts
+/src/*.spec.js
+/src/**/*.spec.js
+/src/*.test.js
+/src/**/*.test.js
+cypress
+deployment
+generated
