@@ -1,0 +1,1 @@
+CREATE TABLE "public"."espmac" ("mac_addr" text NOT NULL, "password" varchar NOT NULL, PRIMARY KEY ("mac_addr") , UNIQUE ("mac_addr"));COMMENT ON TABLE "public"."espmac" IS E'Stores all available ESP devices identified by their MAC address';

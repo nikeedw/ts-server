@@ -1,0 +1,7 @@
+table:
+  name: esp_data
+  schema: public
+object_relationships:
+  - name: espmac
+    using:
+      foreign_key_constraint_on: mac_addr

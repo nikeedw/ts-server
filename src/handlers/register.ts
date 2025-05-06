@@ -10,7 +10,7 @@ export async function register(req: Request, res: Response) {
         const { username, password } = req.body
 
         if (!username || !password) {
-            return res.status(400).send('Missing fields')
+            return res.status(400).json({ message: 'Missing fields' })
         }
 
         const { query, mutation } = await getTadaServerClient()
@@ -18,13 +18,10 @@ export async function register(req: Request, res: Response) {
         // Check if user already exists
         const { data: existingUserData, error: queryError } = await query(CheckUserExistsQuery, { username })
 
-        if (queryError) {
-            console.error(queryError)
-            return res.status(500).send('Error checking user existence')
-        }
+        if (queryError) throw queryError
 
         if (existingUserData?.users_by_pk) {
-            return res.status(409).send('Username already exists')
+            return res.status(409).json({ message: 'Username already exists' })
         }
 
         const hashedPassword = await bcrypt.hash(password, EnvConfigs.TOKEN_SALT)
@@ -35,14 +32,11 @@ export async function register(req: Request, res: Response) {
             password: hashedPassword,
         })
 
-        if (insertError) {
-            console.error(insertError)
-            return res.status(500).send('User registration failed')
-        }
+        if (insertError) throw insertError
 
         return res.status(201).json({ username: insertData?.insert_users_one?.username })
     } catch (e) {
         console.error(e)
-        return
+        return res.status(500).json({ message: e.message })
     }
 }

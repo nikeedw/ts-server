@@ -1,0 +1,1 @@
+CREATE TABLE "public"."esp_data" ("id" serial NOT NULL, "mac_addr" text NOT NULL, "data" jsonb, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("mac_addr"));COMMENT ON TABLE "public"."esp_data" IS E'This table stores outgoing data related to ESP, identified by MAC address';

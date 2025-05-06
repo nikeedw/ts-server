@@ -17,6 +17,6 @@ export function useCors(_request: Request, res: Response, next: NextFunction) {
 
         return next()
     } catch (e) {
-        return res.status(403).send({ message: 'Access restricted' })
+        return res.status(403).json({ message: 'Access restricted' })
     }
 }

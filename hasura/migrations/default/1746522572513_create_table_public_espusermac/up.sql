@@ -1,0 +1,1 @@
+CREATE TABLE "public"."espusermac" ("mac_addr" text NOT NULL, "username" text NOT NULL, PRIMARY KEY ("mac_addr","username") );COMMENT ON TABLE "public"."espusermac" IS E'Pivot table that links users to their ESP devices';

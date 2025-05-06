@@ -27,6 +27,6 @@ COPY --from=static /app/dist/server.mjs ./server.mjs
 COPY --from=static /app/dist/server.mjs.map ./server.mjs.map
 COPY --from=static /app/public/index.html ./public/index.html
 
-CMD [ "server.mjs" ]
+CMD ["server.mjs"]
 
 

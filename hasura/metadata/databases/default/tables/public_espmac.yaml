@@ -1,0 +1,19 @@
+table:
+  name: espmac
+  schema: public
+object_relationships:
+  - name: esp_datum
+    using:
+      foreign_key_constraint_on:
+        column: mac_addr
+        table:
+          name: esp_data
+          schema: public
+array_relationships:
+  - name: espusermacs
+    using:
+      foreign_key_constraint_on:
+        column: mac_addr
+        table:
+          name: espusermac
+          schema: public
