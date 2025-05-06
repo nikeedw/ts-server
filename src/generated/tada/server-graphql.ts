@@ -1,6 +1,6 @@
 import { initGraphQLTada } from 'gql.tada'
-import type { introspection } from './server-graphql-env'
-import { initTadaClient } from '@tada-client'
+import type { introspection } from './server-graphql-env.js'
+import { initTadaClient } from '../tada/initTadaClient.js'
 
 export type IUUID = `${string}-${string}-${string}-${string}-${string}`
 
@@ -18,7 +18,9 @@ export const graphql = initGraphQLTada<{
     }
 }>()
 
-export const { getClient: getTadaServerClient, createTadaClient: createTadaServerClient } = initTadaClient()
+export const { getClient } = initTadaClient()
+
+export const getTadaServerClient = () => getClient({})
 
 export type { FragmentOf, ResultOf, VariablesOf } from 'gql.tada'
 export { readFragment } from 'gql.tada'

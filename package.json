@@ -6,11 +6,11 @@
     "type": "module",
     "license": "Proprietary",
     "scripts": {
-        "dev": "tsx --inspect --watch  ./src/server.ts",
-        "build": "npx tsc && gql.tada check && npx esbuild src/server.ts --bundle --outfile=dist/server.mjs --format=esm --platform=node --sourcemap --loader:.html=text --external:mock-aws-s3 --external:aws-sdk --external:nock --banner:js=\"const { require, __filename,__dirname } = await (async () => {\n\tconst { createRequire } = await import('node:module');\n\tconst { fileURLToPath } = await import('node:url');\n\treturn {\n\t\trequire: createRequire(import.meta.url),\n\t\t__filename: fileURLToPath(import.meta.url),\n\t\t__dirname: fileURLToPath(new URL('.', import.meta.url)),\n\t};\n})();\"",
-        "preview": "node ./dist/server.mjs",
-        "run": "node ./dist/server.cjs",
-        "genserver": "gql.tada generate schema 'http://localhost:8080/v1/graphql' -o ./src/generated/tada/schema/server.graphql && gql-tada generate output",
+        "dev": "tsx --inspect --watch ./src/server.ts",
+        "build": "npx tsc && gql.tada check",
+        "preview": "node ./dist/server.js",
+        "start": "node ./dist/server.js",
+        "genserver": "gql.tada generate schema 'http://localhost:8080/v1/graphql' -o ./src/generated/tada/schema/server.graphql --header \"x-hasura-admin-secret: srvadmin\" && gql-tada generate output",
         "eslint": "eslint \"./**/*.{js,ts}\"",
         "eslint:fix": "eslint --fix \"./**/*.{js,ts}\"",
         "prettier": "prettier --write \"./**/*.{js,ts}\""
@@ -50,11 +50,9 @@
         "eslint-plugin-unused-imports": "^3.0.0",
         "esm": "^3.2.25",
         "import": "^0.0.6",
+        "tsconfig-paths": "^4.2.0",
         "tsx": "^4.7.1",
         "typescript": "^5.7.3"
-    },
-    "imports": {
-        "@EnvConfigs": "EnvConfigs"
     },
     "keywords": []
 }

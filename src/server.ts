@@ -1,12 +1,10 @@
 import express, { json } from 'express'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
-// import 'source-map-support/register'
-// import { json } from 'body-parser'
 
-import { EnvConfigs } from './EnvConfigs'
-import { getRoutes } from './routes'
-import { useCors } from './middlewares/useCors'
+import { getRoutes } from './routes.js'
+import { useCors } from './middlewares/useCors.js'
+import { EnvConfigs } from './EnvConfigs.js'
 
 const app = express()
 

@@ -1,5 +1,5 @@
-import { EnvConfigs } from '@src/EnvConfigs'
-import { getSignedUser } from '@src/graphql/queries/getSignedUser.query'
+import { EnvConfigs } from '../EnvConfigs.js'
+import { getSignedUser } from '../graphql/queries/getSignedUser.query.js'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'

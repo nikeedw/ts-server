@@ -1,4 +1,4 @@
-import { getTadaServerClient, graphql, VariablesOf } from '@tada-server'
+import { graphql, getTadaServerClient, VariablesOf } from '../../generated/tada/server-graphql.js'
 
 const SignedUserQuery = graphql(`
     query getSignedUser($username: String!) {

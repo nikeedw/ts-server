@@ -98,6 +98,9 @@ type esp_data {
     """JSON select path"""
     path: String
   ): jsonb
+
+  """An object relationship"""
+  espmac: espmac!
   id: Int!
   mac_addr: String!
 }
@@ -145,6 +148,7 @@ input esp_data_bool_exp {
   _not: esp_data_bool_exp
   _or: [esp_data_bool_exp!]
   data: jsonb_comparison_exp
+  espmac: espmac_bool_exp
   id: Int_comparison_exp
   mac_addr: String_comparison_exp
 }
@@ -197,6 +201,7 @@ input type for inserting data into table "esp_data"
 """
 input esp_data_insert_input {
   data: jsonb
+  espmac: espmac_obj_rel_insert_input
   id: Int
   mac_addr: String
 }
@@ -225,6 +230,16 @@ type esp_data_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "esp_data"
+"""
+input esp_data_obj_rel_insert_input {
+  data: esp_data_insert_input!
+
+  """upsert condition"""
+  on_conflict: esp_data_on_conflict
+}
+
+"""
 on_conflict condition type for table "esp_data"
 """
 input esp_data_on_conflict {
@@ -236,6 +251,7 @@ input esp_data_on_conflict {
 """Ordering options when selecting data from "esp_data"."""
 input esp_data_order_by {
   data: order_by
+  espmac: espmac_order_by
   id: order_by
   mac_addr: order_by
 }
@@ -374,6 +390,44 @@ type esp_data_variance_fields {
 
 """Stores all available ESP devices identified by their MAC address"""
 type espmac {
+  """An object relationship"""
+  esp_datum: esp_data
+
+  """An array relationship"""
+  espusermacs(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """An aggregate relationship"""
+  espusermacs_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): espusermac_aggregate!
   mac_addr: String!
   password: String!
 }
@@ -402,6 +456,9 @@ input espmac_bool_exp {
   _and: [espmac_bool_exp!]
   _not: espmac_bool_exp
   _or: [espmac_bool_exp!]
+  esp_datum: esp_data_bool_exp
+  espusermacs: espusermac_bool_exp
+  espusermacs_aggregate: espusermac_aggregate_bool_exp
   mac_addr: String_comparison_exp
   password: String_comparison_exp
 }
@@ -420,6 +477,8 @@ enum espmac_constraint {
 input type for inserting data into table "espmac"
 """
 input espmac_insert_input {
+  esp_datum: esp_data_obj_rel_insert_input
+  espusermacs: espusermac_arr_rel_insert_input
   mac_addr: String
   password: String
 }
@@ -448,6 +507,16 @@ type espmac_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "espmac"
+"""
+input espmac_obj_rel_insert_input {
+  data: espmac_insert_input!
+
+  """upsert condition"""
+  on_conflict: espmac_on_conflict
+}
+
+"""
 on_conflict condition type for table "espmac"
 """
 input espmac_on_conflict {
@@ -458,6 +527,8 @@ input espmac_on_conflict {
 
 """Ordering options when selecting data from "espmac"."""
 input espmac_order_by {
+  esp_datum: esp_data_order_by
+  espusermacs_aggregate: espusermac_aggregate_order_by
   mac_addr: order_by
   password: order_by
 }
@@ -524,7 +595,12 @@ input espmac_updates {
 
 """Pivot table that links users to their ESP devices"""
 type espusermac {
+  """An object relationship"""
+  espmac: espmac!
   mac_addr: String!
+
+  """An object relationship"""
+  user: users!
   username: String!
 }
 
@@ -534,6 +610,17 @@ aggregated selection of "espusermac"
 type espusermac_aggregate {
   aggregate: espusermac_aggregate_fields
   nodes: [espusermac!]!
+}
+
+input espusermac_aggregate_bool_exp {
+  count: espusermac_aggregate_bool_exp_count
+}
+
+input espusermac_aggregate_bool_exp_count {
+  arguments: [espusermac_select_column!]
+  distinct: Boolean
+  filter: espusermac_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -546,13 +633,34 @@ type espusermac_aggregate_fields {
 }
 
 """
+order by aggregate values of table "espusermac"
+"""
+input espusermac_aggregate_order_by {
+  count: order_by
+  max: espusermac_max_order_by
+  min: espusermac_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "espusermac"
+"""
+input espusermac_arr_rel_insert_input {
+  data: [espusermac_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: espusermac_on_conflict
+}
+
+"""
 Boolean expression to filter rows from the table "espusermac". All fields are combined with a logical 'AND'.
 """
 input espusermac_bool_exp {
   _and: [espusermac_bool_exp!]
   _not: espusermac_bool_exp
   _or: [espusermac_bool_exp!]
+  espmac: espmac_bool_exp
   mac_addr: String_comparison_exp
+  user: users_bool_exp
   username: String_comparison_exp
 }
 
@@ -570,7 +678,9 @@ enum espusermac_constraint {
 input type for inserting data into table "espusermac"
 """
 input espusermac_insert_input {
+  espmac: espmac_obj_rel_insert_input
   mac_addr: String
+  user: users_obj_rel_insert_input
   username: String
 }
 
@@ -580,10 +690,26 @@ type espusermac_max_fields {
   username: String
 }
 
+"""
+order by max() on columns of table "espusermac"
+"""
+input espusermac_max_order_by {
+  mac_addr: order_by
+  username: order_by
+}
+
 """aggregate min on columns"""
 type espusermac_min_fields {
   mac_addr: String
   username: String
+}
+
+"""
+order by min() on columns of table "espusermac"
+"""
+input espusermac_min_order_by {
+  mac_addr: order_by
+  username: order_by
 }
 
 """
@@ -608,7 +734,9 @@ input espusermac_on_conflict {
 
 """Ordering options when selecting data from "espusermac"."""
 input espusermac_order_by {
+  espmac: espmac_order_by
   mac_addr: order_by
+  user: users_order_by
   username: order_by
 }
 
@@ -1442,6 +1570,41 @@ type subscription_root {
 columns and relationships of "users"
 """
 type users {
+  """An array relationship"""
+  espusermacs(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): [espusermac!]!
+
+  """An aggregate relationship"""
+  espusermacs_aggregate(
+    """distinct select on columns"""
+    distinct_on: [espusermac_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [espusermac_order_by!]
+
+    """filter the rows returned"""
+    where: espusermac_bool_exp
+  ): espusermac_aggregate!
   password: String!
   username: String!
 }
@@ -1470,6 +1633,8 @@ input users_bool_exp {
   _and: [users_bool_exp!]
   _not: users_bool_exp
   _or: [users_bool_exp!]
+  espusermacs: espusermac_bool_exp
+  espusermacs_aggregate: espusermac_aggregate_bool_exp
   password: String_comparison_exp
   username: String_comparison_exp
 }
@@ -1488,6 +1653,7 @@ enum users_constraint {
 input type for inserting data into table "users"
 """
 input users_insert_input {
+  espusermacs: espusermac_arr_rel_insert_input
   password: String
   username: String
 }
@@ -1516,6 +1682,16 @@ type users_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+
+  """upsert condition"""
+  on_conflict: users_on_conflict
+}
+
+"""
 on_conflict condition type for table "users"
 """
 input users_on_conflict {
@@ -1526,6 +1702,7 @@ input users_on_conflict {
 
 """Ordering options when selecting data from "users"."""
 input users_order_by {
+  espusermacs_aggregate: espusermac_aggregate_order_by
   password: order_by
   username: order_by
 }

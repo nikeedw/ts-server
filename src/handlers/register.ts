@@ -1,16 +1,16 @@
-import { CheckUserExistsQuery } from '@src/graphql/queries/checkExistingUser.query'
-import { RegisterUserMutation } from '@src/graphql/mutations/RegisterUserMutation.mutation'
+import { CheckUserExistsQuery } from '../graphql/queries/checkExistingUser.query.js'
+import { RegisterUserMutation } from '../graphql/mutations/RegisterUserMutation.mutation.js'
 import { Request, Response } from 'express'
-import { getTadaServerClient } from '@tada-server'
 import bcrypt from 'bcryptjs'
-import { EnvConfigs } from '@src/EnvConfigs'
+import { EnvConfigs } from '../EnvConfigs.js'
+import { getTadaServerClient } from '../generated/tada/server-graphql.js'
 
 export async function register(req: Request, res: Response) {
     try {
         const { username, password } = req.body
 
         if (!username || !password) {
-            return res.status(400).json({ message: 'Missing fields' })
+            return res.status(400).json({ message: 'The username or password are missing' })
         }
 
         const { query, mutation } = await getTadaServerClient()

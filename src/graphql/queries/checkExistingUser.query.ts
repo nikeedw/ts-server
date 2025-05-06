@@ -1,4 +1,4 @@
-import { graphql } from '@tada-server'
+import { graphql } from '../../generated/tada/server-graphql.js'
 
 export const CheckUserExistsQuery = graphql(`
     query CheckUserExists($username: String!) {

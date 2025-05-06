@@ -14,7 +14,7 @@
         "strictNullChecks": true,
         "strict": true,
         "preserveConstEnums": true,
-        "noEmit": true,
+        "noEmit": false,
         "allowJs": false,
 
         "skipLibCheck": true,
@@ -45,17 +45,6 @@
                 ]
             }
         ],
-        // paths
-        "paths": {
-            // "@EnvConfigs": ["EnvConfigs"],
-            // "@src/*": ["src/*"]
-            "@EnvConfigs": ["EnvConfigs"],
-            "@src/*": ["src/*"],
-            "*": ["node_modules/*"],
-            "@tada-server": ["src/generated/tada/server-graphql"],
-            "@tada-client": ["src/generated/tada/initTadaClient"],
-            "@hooks": ["src/middlewares/hooks"]
-        }
     },
     "include": [
         "src/**/*"
