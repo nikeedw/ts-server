@@ -16,7 +16,7 @@ export const initTadaClient = () => {
         _clientOptions.fetchOptions = {
             ..._clientOptions.fetchOptions,
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
                 ['x-hasura-admin-secret']: EnvConfigs.HASURA_ADMIN_SECRET,
             },
         }
