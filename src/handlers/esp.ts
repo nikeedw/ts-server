@@ -27,7 +27,20 @@ export async function syncEspDataWithDB(req: Request, res: Response) {
             data: rest,
         })
 
-        return res.status(200).json(esp_data)
+        if (!esp_data) throw new Error('Failed to insert data for the device')
+
+        /**@info example of expected response for ESP */
+        // {
+        //     "led_brightness": 512,
+        //     "relay_state": true
+        // }
+
+        const typed_data = esp_data as EspData
+
+        return res.status(200).json({
+            led_brightness: typed_data.led_brightness,
+            relay_state: typed_data.relay_state,
+        })
     } catch (e) {
         console.error(e)
         return res.status(500).json({ message: e.message })

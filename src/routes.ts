@@ -1,3 +1,4 @@
+import { updateEspState } from './handlers/updateEspState.js'
 import { syncEspDataWithDB } from './handlers/esp.js'
 import { login } from './handlers/login.js'
 import { register } from './handlers/register.js'
@@ -10,6 +11,8 @@ export function getRoutes(app: Express) {
     app.post('/login', upload.none(), login)
     app.post('/register', upload.none(), register)
     app.post('/esp', upload.none(), syncEspDataWithDB)
+
+    app.get('/esp', upload.none(), updateEspState)
 
     // GET: ESP requests current led/relay state
     // app.get('/esp', (req: Request, res: Response) => {
