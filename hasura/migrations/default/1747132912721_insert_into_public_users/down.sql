@@ -1,1 +1,1 @@
-DELETE FROM "public"."users" WHERE "username" = 'admin';
+-- DELETE FROM "public"."users" WHERE "username" = 'admin';
