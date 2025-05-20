@@ -1,8 +1,5 @@
 import { Request, Response } from 'express'
-
-// In-memory store to track the current state of each device
-// In a production app, you'd use a database instead
-const deviceStates: Record<string, { led_brightness: number; relay_state: boolean }> = {}
+import { DEVICES_STATE } from '../internal_storage/storage.js'
 
 export async function updateEspState(req: Request, res: Response) {
     try {
@@ -19,13 +16,12 @@ export async function updateEspState(req: Request, res: Response) {
         const { led_brightness, relay_state } = req.query
 
         // Case 1: ESP making a request with just the MAC address
-        if (led_brightness === undefined || relay_state === undefined) {
+        if (!led_brightness || !relay_state) {
             // Return current state for this device if it exists
-            if (deviceStates[mac]) {
-                return res.status(200).json({
-                    led_brightness: deviceStates[mac].led_brightness,
-                    relay_state: deviceStates[mac].relay_state,
-                })
+            const internal_state = DEVICES_STATE.get(mac)
+
+            if (internal_state) {
+                return res.status(200).json(internal_state)
             }
 
             // If no state exists yet, return defaults
@@ -51,10 +47,10 @@ export async function updateEspState(req: Request, res: Response) {
         const relayValue = relay_state === 'true'
 
         // Update the stored state for this device
-        deviceStates[mac] = {
+        DEVICES_STATE.set(mac, {
             led_brightness: brightnessValue,
             relay_state: relayValue,
-        }
+        })
 
         // Return the updated state
         return res.status(200).json({

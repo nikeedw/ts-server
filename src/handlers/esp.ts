@@ -1,16 +1,8 @@
 import { Request, Response } from 'express'
 import { insertEspData } from '../graphql/mutations/insertEspData.mutation.js'
 import { upsertEspDevice } from '../graphql/mutations/upsertEspDevice.mutation.js'
-
-export interface EspData {
-    mac: string
-    password: string
-    temperature: number
-    humidity: number
-    light_intensity: number
-    led_brightness: number
-    relay_state: boolean
-}
+import { EspData } from '../interfaces/esp_data.interface.js'
+import { DEVICES_STATE } from '../internal_storage/storage.js'
 
 export async function syncEspDataWithDB(req: Request, res: Response) {
     try {
@@ -37,10 +29,14 @@ export async function syncEspDataWithDB(req: Request, res: Response) {
 
         const typed_data = esp_data as EspData
 
-        return res.status(200).json({
+        const persistedRes = {
             led_brightness: typed_data.led_brightness,
             relay_state: typed_data.relay_state,
-        })
+        }
+
+        DEVICES_STATE.set(mac, persistedRes)
+
+        return res.status(200).json(persistedRes)
     } catch (e) {
         console.error(e)
         return res.status(500).json({ message: e.message })
